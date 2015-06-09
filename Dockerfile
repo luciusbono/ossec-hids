@@ -5,8 +5,14 @@ ENV REFRESHED_AT 2015-6-6
 # Update repositories, install git, gcc, make and supervisor and
 clone down the latest OSSEC build from the official Github repo.
 
-RUN apt-get update && apt-get install -y git gcc make supervisor
+RUN apt-get update && apt-get install -y \
+    git \
+    gcc \
+    make \
+    supervisor
+
 WORKDIR /tmp/
+
 RUN git clone https://github.com/ossec/ossec-hids.git
 
 # Copy the unattended installation config file from the build context
@@ -17,6 +23,7 @@ everything except e-mail notifications
 
 COPY preloaded-vars.conf /tmp/ossec-hids/etc/preloaded-vars.conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 RUN ./ossec-hids/install.sh
 
 # Clean-up by uninstalling git, gcc and make - since we won't need them
@@ -31,9 +38,12 @@ communication (1514) and the syslog transport (514)
 
 ONBUILD VOLUME /var/ossec/etc
 ONBUILD VOLUME /var/ossec/logs
+
 EXPOSE 1514
 EXPOSE 514
 
+ENV PATH /var/ossec/bin:$PATH
+
 # Run supervisord so that the container will stay alive
 
-CMD ["/usr/bin/supervisord"]
+ENTRYPOINT ["/usr/bin/supervisord"]
