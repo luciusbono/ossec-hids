@@ -1,15 +1,11 @@
 FROM ubuntu:14.04
 MAINTAINER Lucius Bono
-ENV REFRESHED_AT 2015-6-6
+ENV REFRESHED_AT 2015-6-8
 
 # Update repositories, install git, gcc, make and supervisor and 
 # clone down the latest OSSEC build from the official Github repo.
 
-RUN apt-get update && apt-get install -y \
-    git \
-    gcc \
-    make \
-    supervisor
+RUN apt-get update && apt-get install -y git gcc make supervisor
 
 WORKDIR /tmp/
 
@@ -41,8 +37,6 @@ ONBUILD VOLUME /var/ossec/logs
 
 EXPOSE 1514
 EXPOSE 514
-
-ENV PATH /var/ossec/bin:$PATH
 
 # Run supervisord so that the container will stay alive
 
