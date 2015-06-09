@@ -1,4 +1,6 @@
-I couldn't find an OSSEC-HIDS Docker image that actually worked, so I made my own. 
+
+# Docker Image: OSSEC-HIDS
+An ossec-hids Docker image that actually works!
 
 This is a very quick and dirty build, but it pulls from the official ossec-hids Github repo so it should be fairly simple to keep up to date. 
 
